@@ -1,2 +1,2 @@
 # dsp
-This repository is to contain work that I do regarding DSP, and to track my progress as I try to improve my skills.
+This repository is to contain DSP work that I do, and to track my progress as I try to improve my skills.
