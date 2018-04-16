@@ -16,12 +16,12 @@ pre_calc = np.zeros(N, dtype=np.complex)
 pre_m = np.zeros((N, N), dtype=np.complex)
 
 for n in range(N):
-    pre_calc[n] = (-1j * 2 * np.pi * n) / N
+    pre_calc[n] = (1j * 2 * np.pi * n) / N
     
 for m in range(N):
     pre_m[m] = np.exp(pre_calc * m)
 
-def my_dft(x, pre_calc_vals):
+def my_idft(x, pre_calc_vals):
     N = len(x)
     
     output = np.zeros(N, dtype=np.complex)
@@ -33,14 +33,14 @@ def my_dft(x, pre_calc_vals):
         
         output[m] = intermediate_sum
         
-    return output
+    return output / N
     
 my_t0 = time.clock()
-my_result = my_dft(samples, pre_m)
+my_result = my_idft(samples, pre_m)
 my_t1 = time.clock()
 
 np_t0 = time.clock()
-np_result = np.fft.fft(samples)
+np_result = np.fft.ifft(samples)
 np_t1 = time.clock()
 
 if(np.allclose(my_result, np_result)):
@@ -51,7 +51,7 @@ else:
 my_time = my_t1 - my_t0
 np_time = np_t1 - np_t0    
 
-print("My DFT:", my_time, "s")
-print("NP DFT:", np_time, "s")
+print("My IDFT:", my_time, "s")
+print("NP IDFT:", np_time, "s")
 
 print("NP is", my_time / np_time, "times faster.")
