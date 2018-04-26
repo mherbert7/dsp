@@ -11,30 +11,35 @@ import pylab as plt
 #FFT Leakage Script
 #If m is not an integer, then leakage will be observed
 
-complex_in = False
+complex_in = True
+db_magnitude = False
 plot = True
 
 N = 64
-fs = 0.53456257 * np.exp(np.pi)
+fs = 0.4
 ts = 1/fs
 A0 = 1
 
-t = np.linspace(0, (N - 1) * ts, N)
-#t = np.arange(0, N * ts, ts) #<- This is an equivalent way to generate t
+n = np.linspace(0, N - 1, N)
+#n = np.arange(0, N * ts, ts) #<- This is an equivalent way to generate t
 
-m = 37
+m = 31
 f = m * fs / N
 w = 2 * np.pi * f
 
 if(complex_in):
-    x = np.cos(w * t) + 1j*np.sin(w * t)
+    x = np.cos(w * n * ts) + 1j*np.sin(w * n * ts)
 else:
-    x = np.sin(w * t)
+    x = np.sin(w * n * ts)
 
 x *= A0
 
-f_out = 20 * np.log10(np.abs(np.fft.fft(x)))
+f_out = np.abs(np.fft.fft(x))
 frequencies = np.fft.fftfreq(N, d=ts)
+
+
+if(db_magnitude):
+    f_out = 20 * np.log10(f_out)
 
 if(plot):
     plt.stem(f_out, markerfmt='b.')
