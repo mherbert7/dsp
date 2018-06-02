@@ -48,16 +48,23 @@ X = np.fft.fft(x)
 my_X = np.zeros(N, dtype=np.complex)
 first_stage = np.zeros(N, dtype=np.complex)
 
-first_stage[0] = x[0] + W[0] * x[2]
-first_stage[1] = x[0] + W[2] * x[2]
-first_stage[2] = x[1] + W[0] * x[3]
-first_stage[3] = x[1] + W[2] * x[3]
+#2-point DFTs
+a = x[0:2]
+b = W[0] * x[2:4]
 
+first_stage[0] = a[0] + b[0]
+first_stage[1] = a[0] - b[0]
+first_stage[2] = a[1] + b[1]
+first_stage[3] = a[1] - b[1]
 
-my_X[0] = first_stage[0] + W[0] * first_stage[2]
-my_X[1] = first_stage[1] + W[1] * first_stage[3]
-my_X[2] = W[2] * first_stage[2] + first_stage[0]
-my_X[3] = W[3] * first_stage[3] + first_stage[1]
+#4-point DFT
+A = first_stage[0:2]
+B = W[0:2] * first_stage[2:4]
+
+my_X[0] = A[0] + B[0]
+my_X[1] = A[1] + B[1]
+my_X[2] = A[0] - B[0]
+my_X[3] = A[1] - B[1]
 
 
 
