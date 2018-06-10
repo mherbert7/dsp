@@ -56,11 +56,13 @@ u = W_2 * x[4:8]
 
 first_stage[0] = l[0] + u[0]
 first_stage[1] = l[0] - u[0]
+
 first_stage[2] = l[1] + u[1]
 first_stage[3] = l[1] - u[1]
 
 first_stage[4] = l[2] + u[2]
 first_stage[5] = l[2] - u[2]
+
 first_stage[6] = l[3] + u[3]
 first_stage[7] = l[3] - u[3]
 

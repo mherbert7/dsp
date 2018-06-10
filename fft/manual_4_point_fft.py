@@ -45,12 +45,15 @@ W = generate_W_N_table(N)
 
 X = np.fft.fft(x)
 
+y = np.fft.ifft(X)
+
 my_X = np.zeros(N, dtype=np.complex)
 first_stage = np.zeros(N, dtype=np.complex)
 
 #2-point DFTs
+W_2 = np.array([W[0], W[0]])
 a = x[0:2]
-b = W[0] * x[2:4]
+b = W_2 * x[2:4]
 
 first_stage[0] = a[0] + b[0]
 first_stage[1] = a[0] - b[0]
@@ -58,8 +61,9 @@ first_stage[2] = a[1] + b[1]
 first_stage[3] = a[1] - b[1]
 
 #4-point DFT
+W_4 = np.array([W[0], W[1]])
 A = first_stage[0:2]
-B = W[0:2] * first_stage[2:4]
+B = W_4 * first_stage[2:4]
 
 my_X[0] = A[0] + B[0]
 my_X[1] = A[1] + B[1]
